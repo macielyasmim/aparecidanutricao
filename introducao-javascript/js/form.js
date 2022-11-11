@@ -7,12 +7,22 @@ var botaoAdicionar = document.querySelector("#adicionar-paciente");
       
       var pacienteTr = montaTr(paciente);
 
+      var erros =  validaPaciente(paciente);
+
+      if(erros.length > 0 ){
+            var mensagemErro = document.querySelector("#mensagem-erro");
+            mensagemErro.textContent = erros;
+            return;
+      }
+
+               //adicionando pacientes na tabela
       var tabela = document.querySelector("#tabela-pacientes");
 
       tabela.appendChild(pacienteTr);
       
       form.reset();
-      });
+     
+});
 
       function obtemPacienteDoFormulario(form){
             var paciente = {
@@ -24,6 +34,7 @@ var botaoAdicionar = document.querySelector("#adicionar-paciente");
             }
             return paciente;
       }
+
       function montaTr(paciente){
             var pacienteTr = document.createElement("tr");
             pacienteTr.classList.add("paciente"); 
@@ -42,4 +53,16 @@ var botaoAdicionar = document.querySelector("#adicionar-paciente");
             td.textContent = dado;
             td.classList.add(classe);
             return td;
+      }
+
+      function validaPaciente(paciente){
+           var erros  = []
+
+           if(!validaPeso(paciente.peso)){
+                 erros.push("peso é  invalido");
+           }
+           if(!validaAltura(paciente.altura)){
+                 erros.push("altura é invalida");
+           }
+           return erros;
       }
